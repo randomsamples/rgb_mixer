@@ -1,13 +1,14 @@
 `default_nettype none
 `timescale 1ns/1ns
-module pwm (
+module pwm  #(parameter WIDTH = 8,
+              parameter INVERT = 0) (
     input wire clk,
     input wire reset,
     output wire out,
-    input wire [7:0] level
+    input wire [WIDTH - 1:0] level
     );
 
-reg [7:0] counter;
+reg [WIDTH - 1:0] counter;
 
 always @(posedge clk)
     begin
@@ -17,6 +18,6 @@ always @(posedge clk)
             counter <= counter + 1;
     end
 
-assign out = (counter < level);
+assign out = (counter < level) ^ INVERT;
 
 endmodule
