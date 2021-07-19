@@ -7,4 +7,16 @@ module pwm (
     input wire [7:0] level
     );
 
+reg [7:0] counter;
+
+always @(posedge clk)
+    begin
+        if (reset)
+            counter <= 0;
+        else
+            counter <= counter + 1;
+    end
+
+assign out = (counter < level);
+
 endmodule
